@@ -1,3 +1,9 @@
+const initialItems = [
+  { id: 1, description: "Passports", quantity: 2, packed: false },
+  { id: 2, description: "Socks", quantity: 12, packed: false },
+  { id: 3, description: "Charge", quantity: 1, packed: true },
+];
+
 function App() {
   return (
     <div className="app">
@@ -20,7 +26,20 @@ function Form() {
 }
 
 function PackingList() {
-  return <div className="list">LIST</div>
+  return <div className="list">
+    <ul>
+      {initialItems.map(item => <Item item={item} />)}
+    </ul>
+  </div>
+}
+
+function Item({ item }) {
+  return (
+    <li key={item.id}>
+      <span style={item.packed ? { textDecoration: 'line-through' } : {}}>{item.quantity} {item.description}</span>
+      <button>❌</button>
+    </li>
+  )
 }
 
 function Stats() {
