@@ -13,11 +13,15 @@ function App() {
     setItems(c => [...c, item]);
   }
 
+  const handleDeleteItem = (id) => {
+    setItems((items) => items.filter((item) => item.id !== id));
+  }
+
   return (
     <div className="app">
       <Logo />
       <Form onAddItems={handleAddItems} />
-      <PackingList items={items} />
+      <PackingList items={items} onDeleteItem={handleDeleteItem} />
       <Stats />
     </div>
   );
@@ -53,19 +57,19 @@ function Form({ onAddItems }) {
   </form>
 }
 
-function PackingList({ items }) {
+function PackingList({ items, onDeleteItem }) {
   return <div className="list">
     <ul>
-      {items.map(item => <Item key={item.id} item={item} />)}
+      {items.map(item => <Item key={item.id} item={item} onDeleteItem={onDeleteItem} />)}
     </ul>
   </div>
 }
 
-function Item({ item }) {
+function Item({ item, onDeleteItem }) {
   return (
     <li>
       <span style={item.packed ? { textDecoration: 'line-through' } : {}}>{item.quantity} {item.description}</span>
-      <button>❌</button>
+      <button onClick={() => onDeleteItem(item.id)}>❌</button>
     </li>
   )
 }
